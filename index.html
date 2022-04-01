@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    
+    <ul></ul>
+
+    <p>Terzo punto</p>
+</body>
+</html>
+
+<script>
+    const totalConfirmed = async () => {
+    const response = await fetch('https://api.covid19api.com/summary')
+    const data =  await response.json()
+    const unList = document.querySelector('ul')
+    
+    const lii = document.createElement('li');
+        unList.appendChild(lii).innerHTML = data.global;
+    data.Countries.forEach(element => {
+            const list = document.createElement('li');
+            unList.appendChild(list).innerHTML = element.TotalConfirmed;
+
+        });
+        data.Countries.forEach(element => {
+            const list = document.createElement('li');
+            unList.appendChild(list).innerHTML = element.Country + ' ' + element.CountryCode + ' ' + element.TotalConfirmed;
+
+        });
+
+        let array = [];
+        data.Countries.forEach(element => {
+            array.push(element.TotalConfirmed)
+
+        })
+        let max = array.reduce(function(a, b) {
+         return Math.max(a, b);
+        }, -Infinity);
+        console.log(max)
+
+        let min = array.reduce(function(a, b){
+            return Math.min(a, b);
+        }, Infinity);
+        console.log(min)
+
+        document.querySelector('p').innerHTML = `Il massimo è ${max} e il minimo è ${min}`
+}
+
+totalConfirmed()
+</script>
